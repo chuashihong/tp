@@ -5,42 +5,59 @@ title: Shi Hong's Project Portfolio Page
 
 ### Project: AgenSee
 
-A
-
 Given below are my contributions to the project.
 
-* **New Feature**: Added the ability to undo/redo previous commands.
-    * What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-    * Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-    * Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-    * Credits: *{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}*
+# Overview
 
-* **New Feature**: Added a history command that allows the user to navigate to previous commands using up/down keys.
+### I have updated the storage system of our project, to make it able to store the correct info into the JSON format by creating many JSONAdapted classes. I have also make initial update to the UI of the project. I also made contribution in adding new features like `EditSellerCommand` and `DeleteSellerCommand` and added a lot of test cases in `EditSellerCommandTest`, `EditBuyerCommandTest`, and are in charge of removing unused classes. In order to maintain the code coverage, I have made a lot of changes to maintain the code quality for our team project.
 
-* **Code contributed**: [RepoSense link]()
+* **Code contributed**:
+    * ```House``` Class
+    * ```HouseType``` Enum Class
+    * ```PriceRange``` Class
+    * ```Location``` Class
+    * ```HouseTest``` Class
+    * ```PriceRangeTest``` Class
+    * ```EditSellerCommand``` Class and its Test cases
+    * ```JsonAdaptedBuyer``` Class and its Test cases
+    * ```JsonAdaptedSeller``` Class and its Test cases
+    * ```JsonAdaptedHouse``` Class and its Test cases
+    * ```JsonAdaptedPriceRange``` Class
+    * ```JsonAdaptedPropertyToBuy``` Class
+    * ```JsonAdaptedPropertyToSell``` Class
+    * ```JsonAdaptedBuyer``` Class
+    * ```JsonAdaptedSeller``` Class
+    * ...and a lot more in test cases Class
+
+* **Enhancement** :
+    * Improve code quality in the project by reviewing teammate's code and improve them for easier readability and less bug prone
+    * Make initial changes about FXML and FXML related classes to make sense in rendering information in UI
+    * Improve the Storage system of the project by adding a lot of JSON related classes
+    * Removing the unused classess and the old Addressbook classes.
+    * Add more test cases into the project to cover more code and minimize the bug possiblity
 
 * **Project management**:
-    * Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-
-* **Enhancements to existing features**:
-    * Updated the GUI color scheme (Pull requests [\#33](), [\#34]())
-    * Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests [\#36](), [\#38]())
+    * Fixed a bug on the project [\#84](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/84)
+    * Give ideas to teammates while planning on the next iteration
+    * Actively discuss with teammates in order to maintain the consistency in our project
+    * Increase code coverage by adding more test cases.
+    * Add issues in the Github to keep track of the progress in out project.
 
 * **Documentation**:
     * User Guide:
-        * Added documentation for the features `delete` and `find` [\#72]()
-        * Did cosmetic tweaks to existing documentation of features `clear`, `exit`: [\#74]()
+        * Update documentation for the command `add`
+        * Update documentation for the file system, explain about the data structure of our JSON format in details
+        * Made some changes so that it is updated to our current version.
     * Developer Guide:
-        * Added implementation details of the `delete` feature.
+        * Add a documentation about `EditBuyer` and `EditSeller` command
+        * Add a detailed UML diagram about the sequence diagram of `EditBuyerCommand` and `EditSellerCommand` class
+        * Add a detailed explanation when executing `EditBuyer` and `EditSeller` command
 
 * **Community**:
-    * PRs reviewed (with non-trivial review comments): [\#12](), [\#32](), [\#19](), [\#42]()
-    * Contributed to forum discussions (examples: [1](), [2](), [3](), [4]())
-    * Reported bugs and suggestions for other teams in the class (examples: [1](), [2](), [3]())
-    * Some parts of the history feature I added was adopted by several other class mates ([1](), [2]())
-
-* **Tools**:
-    * Integrated a third party library (Natty) to the project ([\#42]())
-    * Integrated a new Github plugin (CircleCI) to the team repo
-
-* _{you can add/remove categories in the list above}_
+    * PRs reviewed (with non-trivial review comments): [\#72](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/72), where I give some commands on the code and potential typo and give approval.
+    * Pull Request made:
+        * [Update AboutUs](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/24)
+        * [Add a new field 'description' and 'remark' ](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/71)
+        * [Bug fix](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/84)
+        * [Add House Class, HouseType <Enum>, Location, and PriceRange](https://github.com/AY2122S2-CS2103T-T11-2/tp/pull/87)
+    

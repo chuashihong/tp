@@ -5,7 +5,9 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.buyer.Buyer;
 import seedu.address.model.client.Client;
+import seedu.address.model.seller.Seller;
 
 /**
  * The API of the Model component.
@@ -13,6 +15,10 @@ import seedu.address.model.client.Client;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
+
+    Predicate<Seller> PREDICATE_SHOW_ALL_SELLERS = unused -> true;
+
+    Predicate<Buyer> PREDICATE_SHOW_ALL_BUYERS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -51,6 +57,47 @@ public interface Model {
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+    //======================Address Book methods for seller=========================//
+    /**
+     * Returns the user prefs' seller address book file path.
+     */
+    Path getSellerAddressBookFilePath();
+
+    void sortFilteredSellerList(String comparator, String order);
+
+    /**
+     * Sets the user prefs' address book file path.
+     */
+    void setSellerAddressBookFilePath(Path sellerAddressBookFilePath);
+
+    /**
+     * Replaces address book data with the data in {@code addressBook}.
+     */
+    void setSellerAddressBook(ReadOnlySellerAddressBook sellerAddressBook);
+
+    /** Returns the AddressBook */
+    ReadOnlySellerAddressBook getSellerAddressBook();
+
+    //======================Address Book methods for buyer=========================//
+    /**
+     * Returns the user prefs' seller address book file path.
+     */
+    Path getBuyerAddressBookFilePath();
+
+    /**
+     * Sets the user prefs' address book file path.
+     */
+    void setBuyerAddressBookFilePath(Path buyerAddressBookFilePath);
+
+    /**
+     * Replaces address book data with the data in {@code addressBook}.
+     */
+    void setBuyerAddressBook(ReadOnlyBuyerAddressBook buyerAddressBook);
+
+    /** Returns the AddressBook */
+    ReadOnlyBuyerAddressBook getBuyerAddressBook();
+
+    void sortFilteredBuyerList(String comparedItem, String order);
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
@@ -86,6 +133,84 @@ public interface Model {
 
     void updateFilteredClientList(Predicate<Client> predicate);
 
-    void sortFilteredClientList();
+    //========== For addbuyer============//
+
+    /**
+     * Checks if the same buyer already exists in AgentSee.
+     *
+     * @param buyer The buyer to be checked.
+     * @return Whether buyer exists in AgentSee.
+     */
+    boolean hasBuyer(Buyer buyer);
+
+    /**
+     * Adds a new buyer to AgentSee.
+     *
+     * @param buyer The buyer to be added.
+     */
+    void addBuyer(Buyer buyer);
+
+    /**
+     * Deletes the given buyer.
+     * The buyer must exist in the address book.
+     */
+    void deleteBuyer(Buyer target);
+
+    /**
+     * Replaces the given buyer {@code target} with {@code editedBuyer}.
+     * {@code target} must exist in the address book.
+     * The person identity of {@code editedBuyer} must not be the same as another existing buyer in the address book.
+     */
+    void setBuyer(Buyer target, Buyer editedBuyer);
+
+    /** Returns an unmodifiable view of the filtered buyer list */
+    ObservableList<Buyer> getFilteredBuyerList();
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+
+    void updateFilteredBuyerList(Predicate<Buyer> predicate);
+
+    //========== For addseller============//
+
+    /**
+     * Checks if the same buyer already exists in AgentSee.
+     *
+     * @param seller The buyer to be checked.
+     * @return Whether buyer exists in AgentSee.
+     */
+    boolean hasSeller(Seller seller);
+
+    /**
+     * Adds a new buyer to AgentSee.
+     *
+     * @param seller The buyer to be added.
+     */
+    void addSeller(Seller seller);
+
+    /**
+     * Deletes the given person.
+     * The person must exist in the address book.
+     */
+    void deleteSeller(Seller target);
+
+    /**
+     * Replaces the given person {@code target} with {@code editedPerson}.
+     * {@code target} must exist in the address book.
+     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     */
+    void setSeller(Seller target, Seller editedSeller);
+
+    /** Returns an unmodifiable view of the filtered seller list */
+    ObservableList<Seller> getFilteredSellerList();
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+
+    void updateFilteredSellerList(Predicate<Seller> predicate);
 
 }

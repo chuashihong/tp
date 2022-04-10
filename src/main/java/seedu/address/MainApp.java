@@ -16,15 +16,23 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
+import seedu.address.model.BuyerAddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyBuyerAddressBook;
+import seedu.address.model.ReadOnlySellerAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.SellerAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.BuyerAddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
+import seedu.address.storage.JsonBuyerAddressBookStorage;
+import seedu.address.storage.JsonSellerAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.SellerAddressBookStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
@@ -36,7 +44,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 2, 0, true);
+    public static final Version VERSION = new Version(1, 2, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -57,7 +65,12 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        SellerAddressBookStorage sellerAddressBookStorage =
+                new JsonSellerAddressBookStorage(userPrefs.getSellerAddressBookFilePath());
+        BuyerAddressBookStorage buyerAddressBookStorage =
+                new JsonBuyerAddressBookStorage(userPrefs.getBuyerAddressBookFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, sellerAddressBookStorage,
+                buyerAddressBookStorage);
 
         initLogging(config);
 
@@ -75,22 +88,44 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlySellerAddressBook> sellerAddressBookOptional;
+        Optional<ReadOnlyBuyerAddressBook> buyerAddressBookOptional;
+        // Create dummy value for initialData
         ReadOnlyAddressBook initialData;
+        ReadOnlySellerAddressBook initialSellerData;
+        ReadOnlyBuyerAddressBook initialBuyerData;
+        //Dummy AddressBook (will be delete later)
+        initialData = new AddressBook();
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            buyerAddressBookOptional = storage.readBuyerAddressBook();
+            if (!buyerAddressBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample BuyerAddressBook");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+
+            initialBuyerData = buyerAddressBookOptional.orElseGet(SampleDataUtil::getSampleBuyerAddressBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Data file not in the correct format. Will be starting with an empty BuyerAddressBook");
+            initialBuyerData = new BuyerAddressBook();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty BuyerAddressBook");
+            initialBuyerData = new BuyerAddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            sellerAddressBookOptional = storage.readSellerAddressBook();
+            if (!sellerAddressBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample SellerAddressBook");
+            }
+            initialSellerData = sellerAddressBookOptional.orElseGet(SampleDataUtil::getSampleSellerAddressBook);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty SellerAddressBook");
+            initialSellerData = new SellerAddressBook();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty SellerAddressBook");
+            initialSellerData = new SellerAddressBook();
+        }
+
+        return new ModelManager(initialData, userPrefs, initialSellerData, initialBuyerData);
     }
 
     private void initLogging(Config config) {

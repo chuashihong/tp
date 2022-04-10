@@ -5,8 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.buyer.Buyer;
 import seedu.address.model.client.Client;
 import seedu.address.model.client.UniqueClientList;
+import seedu.address.model.seller.Seller;
 
 /**
  * Wraps all data at the address-book level
@@ -15,6 +17,8 @@ import seedu.address.model.client.UniqueClientList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueClientList clients;
+
+    // private final UniqueBuyerList buyers;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -72,6 +76,50 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addclient(Client p) {
         clients.add(p);
+    }
+
+    //======== AddBuyer =========//
+
+    /**
+     * Checks if the client list contains the buyer.
+     *
+     * @param buyer The buyer.
+     * @return Whether buyer is already in list.
+     */
+    public boolean hasBuyer(Buyer buyer) {
+        requireNonNull(buyer);
+        return clients.contains(buyer);
+    }
+
+    /**
+     * Adds a new buyer to the client list.
+     *
+     * @param buyer The buyer.
+     */
+    public void addBuyer(Buyer buyer) {
+        clients.add(buyer);
+    }
+
+    //======== AddSeller =========//
+
+    /**
+     * Checks if the client list contains the seller.
+     *
+     * @param seller The seller.
+     * @return Whether seller is already in list.
+     */
+    public boolean hasSeller(Seller seller) {
+        requireNonNull(seller);
+        return clients.contains(seller);
+    }
+
+    /**
+     * Adds a new seller to the client list.
+     *
+     * @param seller The seller.
+     */
+    public void addSeller(Seller seller) {
+        clients.add(seller);
     }
 
     /**

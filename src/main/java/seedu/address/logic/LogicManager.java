@@ -14,7 +14,11 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyBuyerAddressBook;
+import seedu.address.model.ReadOnlySellerAddressBook;
+import seedu.address.model.buyer.Buyer;
 import seedu.address.model.client.Client;
+import seedu.address.model.seller.Seller;
 import seedu.address.storage.Storage;
 
 /**
@@ -46,7 +50,9 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            storage.saveAddressBook(model.getAddressBook());
+            //storage.saveAddressBook(model.getAddressBook());
+            storage.saveSellerAddressBook(model.getSellerAddressBook());
+            storage.saveBuyerAddressBook(model.getBuyerAddressBook());
         } catch (IOException ioe) {
             throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
         }
@@ -77,5 +83,35 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public ReadOnlySellerAddressBook getSellerAddressBook() {
+        return model.getSellerAddressBook();
+    }
+
+    @Override
+    public ObservableList<Seller> getFilteredSellerList() {
+        return model.getFilteredSellerList();
+    }
+
+    @Override
+    public Path getSellerAddressBookFilePath() {
+        return model.getBuyerAddressBookFilePath();
+    }
+
+    @Override
+    public ReadOnlyBuyerAddressBook getBuyerAddressBook() {
+        return model.getBuyerAddressBook();
+    }
+
+    @Override
+    public ObservableList<Buyer> getFilteredBuyerList() {
+        return model.getFilteredBuyerList();
+    }
+
+    @Override
+    public Path getBuyerAddressBookFilePath() {
+        return model.getBuyerAddressBookFilePath();
     }
 }

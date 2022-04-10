@@ -4,63 +4,63 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.BuyerCommandTestUtil.VALID_PROPERTY_BUY_CHAD;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalBuyers.CHAD;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLIENT;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditclientDescriptor;
+import seedu.address.logic.commands.AddBuyerCommand;
+import seedu.address.logic.commands.AddPropertyToBuyCommand;
+import seedu.address.logic.commands.DeleteBuyerCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.client.Client;
-import seedu.address.model.client.NameContainsKeywordsPredicate;
-import seedu.address.testutil.ClientBuilder;
-import seedu.address.testutil.ClientUtil;
-import seedu.address.testutil.EditClientDescriptorBuilder;
+import seedu.address.model.buyer.Buyer;
+import seedu.address.testutil.BuyerBuilder;
+import seedu.address.testutil.BuyerUtil;
+//import seedu.address.testutil.ClientUtil;
 
 public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
 
-    @Test
-    public void parseCommand_add() throws Exception {
-        Client client = new ClientBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(ClientUtil.getAddCommand(client));
-        assertEquals(new AddCommand(client), command);
-    }
+    //@Test
+    //public void parseCommand_add() throws Exception {
+    //    Client client = new ClientBuilder().build();
+    //    AddCommand command = (AddCommand) parser.parseCommand(ClientUtil.getAddCommand(client));
+    //    assertEquals(new AddCommand(client), command);
+    //}
+
+    //@Test
+    //public void parseCommand_clear() throws Exception {
+    //    assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
+    //    assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
+    //}
+
+    //@Test
+    //public void parseCommand_delete() throws Exception {
+    //    DeleteCommand command = (DeleteCommand) parser.parseCommand(
+    //            DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_CLIENT.getOneBased());
+    //    assertEquals(new DeleteCommand(INDEX_FIRST_CLIENT), command);
+    //}
 
     @Test
-    public void parseCommand_clear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
+    public void parseCommand_deleteBuyer() throws Exception {
+        DeleteBuyerCommand command = (DeleteBuyerCommand) parser.parseCommand(
+                DeleteBuyerCommand.COMMAND_WORD + " " + INDEX_FIRST_CLIENT.getOneBased());
+        assertEquals(new DeleteBuyerCommand(INDEX_FIRST_CLIENT), command);
     }
 
-    @Test
-    public void parseCommand_delete() throws Exception {
-        DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_CLIENT.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_CLIENT), command);
-    }
-
-    @Test
-    public void parseCommand_edit() throws Exception {
-        Client client = new ClientBuilder().build();
-        EditclientDescriptor descriptor = new EditClientDescriptorBuilder(client).build();
-        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_CLIENT.getOneBased() + " " + ClientUtil.getEditclientDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_CLIENT, descriptor), command);
-    }
+    //@Test
+    //public void parseCommand_edit() throws Exception {
+    //    Client client = new ClientBuilder().build();
+    //    EditclientDescriptor descriptor = new EditClientDescriptorBuilder(client).build();
+    //    EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
+    //            + INDEX_FIRST_CLIENT.getOneBased() + " " + ClientUtil.getEditclientDescriptorDetails(descriptor));
+    //    assertEquals(new EditCommand(INDEX_FIRST_CLIENT, descriptor), command);
+    //}
 
     @Test
     public void parseCommand_exit() throws Exception {
@@ -68,13 +68,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
-    @Test
-    public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " n/" + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
-    }
+    //@Test
+    //public void parseCommand_find() throws Exception {
+    //    List<String> keywords = Arrays.asList("foo", "bar", "baz");
+    //    FindCommand command = (FindCommand) parser.parseCommand(
+    //            FindCommand.COMMAND_WORD + " n/" + keywords.stream().collect(Collectors.joining(" ")));
+    //    assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    //}
 
     @Test
     public void parseCommand_help() throws Exception {
@@ -82,10 +82,30 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
     }
 
+    //@Test
+    //public void parseCommand_list() throws Exception {
+    //    assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    //    assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    //}
+
     @Test
-    public void parseCommand_list() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    public void parseCommand_addbuyer() throws Exception {
+        Buyer buyer = new BuyerBuilder().build();
+        AddBuyerCommand command = (AddBuyerCommand) parser.parseCommand(BuyerUtil.getAddBuyerCommand(buyer));
+        AddBuyerCommand c = new AddBuyerCommand(buyer);
+        assertEquals(c, command);
+    }
+
+    @Test
+    public void parseCommand_addPropertyToBuy() throws Exception {
+        Buyer buyer = new BuyerBuilder(CHAD).build();
+        AddPropertyToBuyCommand command = (AddPropertyToBuyCommand)
+                parser.parseCommand(AddPropertyToBuyCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_CLIENT.getOneBased() + " " + BuyerUtil.getPropertyToBuyCommand(buyer));
+        AddPropertyToBuyCommand c = new AddPropertyToBuyCommand(INDEX_FIRST_CLIENT,
+                VALID_PROPERTY_BUY_CHAD);
+        boolean a = c.equals(command);
+        assertTrue(a);
     }
 
     @Test
