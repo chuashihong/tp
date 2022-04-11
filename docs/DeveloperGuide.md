@@ -683,8 +683,8 @@ testers are expected to do more *exploratory* testing.
     
    example JSON format of the `buyeraddressbook.json`  and `selleraddressbook`:
 
-
    `buyeraddressbook.json`:
+
     ```
     {
       "buyers" : [ {
