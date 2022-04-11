@@ -685,7 +685,7 @@ testers are expected to do more *exploratory* testing.
 
 
    `buyeraddressbook.json`:
-
+    ```
     {
       "buyers" : [ {
         "name" : "Shi Hong",
@@ -710,11 +710,11 @@ testers are expected to do more *exploratory* testing.
         "propertyToBuy" : null
       }
     }
+    ```
 
+   `selleraddressbook.json`:
 
-   ```selleraddressbook.json```:
-
-
+    ```
     {
       "sellers" : [ {
         "name" : "chua",
@@ -740,6 +740,7 @@ testers are expected to do more *exploratory* testing.
         "propertyToSell" : null
       }
     }
+    ```
 
 
 
