@@ -2,8 +2,9 @@
 layout: page
 title: Developer Guide
 ---
-* Table of Contents
-  {:toc}
+
+  * Table of Contents 
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -76,7 +77,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `clientListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `CLIENTListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -85,7 +86,7 @@ The `UI` component,
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `client` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `CLIENT` object residing in the `Model`.
 
 ### Logic component
 
@@ -162,14 +163,17 @@ The `Storage` component,
 
 #### Design Consideration
 1. Current Design: Having different storage for buyers and sellers
-   Pros: Easier to implement as issues on one side will not affect issues on another. Moreover, when one json file is corrupted, the other json file can still be used.
 
-Cons: There will be lots of repetitive code.
+
+- Pros: Easier to implement as issues on one side will not affect issues on another. Moreover, when one json file is corrupted, the other json file can still be used.
+
+- Cons: There will be lots of repetitive code.
 
 2. Alternative: Use addressbook.json to contain both buyer and seller list
-   Pros: Less repetitive code
+   
+- Pros: Less repetitive code
 
-Cons: Another layer will be added in the json file, harder to debug and more prone to error.
+- Cons: Another layer will be added in the json file, harder to debug and more prone to error.
 
 ### Common classes
 
@@ -296,25 +300,28 @@ The following Sequence Diagrams summarizes the various steps involved:
 
 
 
-### 2. `editbuyer` / `For full details on implementation, check out this [link](https://github.com/AY2122S2-CS2103T-T11-2/tp/tree/master/src/main/java/seedu/address/logic)
-editseller` feature
-The `editbuyer` / `editseller` command mechanism uses a similar interactions as shown in the [Logic Component](). Mainly, it can be broken down into these steps:
-#### Syntax:
-```editbuyer [index] n/... p/... t/... prop/ h/... l/... pr/...```
 
-```editseller [index] n/... p/... t/... prop/ h/... l/... pr/...```
+
+### Edit Buyer feature
+For full details on implementation, check out this [link](https://github.com/AY2122S2-CS2103T-T11-2/tp/blob/master/src/main/java/seedu/address/logic/commands/EditBuyerCommand.java)
+
+The `edit-b` / `edit-s` command mechanism uses a similar interactions as shown in the [Logic Component](). Mainly, it can be broken down into these steps:
+#### Syntax:
+```edit-b [index] n/... p/... t/... prop/ h/... l/... pr/...```
+
+```edit-s [index] n/... p/... t/... prop/ h/... l/... pr/...```
 
 Note: All the prefix (like n/, p/, ...) are <b>optional</b>, you could omit any of them but at least one prefix should be provided, and the <b>order</b> of prefix does not matter.
 
 Below are some detailed steps while executing `editbuyer` / `editseller` command:
 
-**We use ```editbuyer``` command as an example, the other command's flow are similar to this command as well.**
+**We use ```edit-b``` command as an example, the other command's flow are similar to this command as well.**
 
 ---
 
 **Step 1:**
 
-The user types input E.g. `editbuyer 1 n/Chua` into the `CommandBox`
+The user types input E.g. `edit-b 1 n/Chua` into the `CommandBox`
 
 **Step 2:**
 
@@ -358,12 +365,14 @@ The Sequence Diagrams below summarizes the various steps involved:
 
 ---
 
+
+
 ### Add property for buyer feature
 The `add-ptb` command uses a similar mechanism as the `add-b` command mentioned [above](#add-buyer-feature), with the following differences:
 
 1. An index needs to be specified along with the necessary fields
    E.g. `add-ptb 1 h/condo l/Serangoon pr/400000,900000`
-2. The Parser (`AddPropertyToBuyCommandParser`) checks if the position parsed in is valid (Greater than equal to 1 and Smaller than or equal to the size of the displayed buyer list).
+2. The Parser (`AddPropertyToBuyCommandParser`) checks if the position parsed in is valid (Greater than equal to 1 and smaller than or equal to the size of the displayed buyer list).
 3. The updated buyer remains in the same position as before.
 
 Alternatives considered:
@@ -380,8 +389,28 @@ Alternatives considered:
     - Cons:
         - Hard to implement
         - Error prone
+        
+### Appointment feature
 
-### `sort` feature
+The `appt-b` command uses a similar mechanism as the `add-b` command mentioned [above](#add-buyer-feature), with the following differences:
+
+1. An index needs to be specified along with the necessary time field.
+   E.g. appt-b 1 time/2023-09-09-09-09
+2. The Parser (`AppointmentBuyerCommandParser`) checks if the position parsed in is valid (Greater than equal to 1 and Smaller than or equal to the size of the displayed buyer list).
+3. The updated buyer remains in the same position as before.
+
+Design Consideration:
+
+- Current: All the properties of time needs to be entered. E.g. The year, month, day, hour and minute should all be present.
+    - Pros: Less prone to confusion
+    - Cons: More inputs needed.
+- Alternative 1: Have some option fields such as year and minute.
+
+    - Pros: Make the command line input short.
+    - Cons: Harder to deduce what the user want as the option fields, more prone to mistakes and confusion.
+
+
+### Sort feature
 
 The sort feature allows the user to sort the buyers and sellers by name or time in ascending or descending order.
 
@@ -402,18 +431,18 @@ The user types input E.g.  `sort-b by/time o/asc` into the `CommandBox` (See [UI
 **Step 3:**
 `SortBuyerCommandParser` then checks whether all the prefixes are present and whether the compared item are sortable, and whether the order belongs to either `asc` or `desc`. If yes, a `SortBuyerCommand` is returned.
 
-**Step 2:**
+**Step 4:**
 The `execute(model)` method of `SortBuyerCommand` is being called.
 
-**Step 3:**
+**Step 5:**
 The `sortFilteredBuyerList(time, asc)` method of `model` is being called, which in turn calls `sortFilteredBuyerList(time, asc)` method of `BuyerAddressBook`, which in turn calls `sortBuyers(time, asc)` from its own copy of `UniqueBuyerList`.
 
 
-**Step 4:**
+**Step 6:**
 The `sortBuyers(time, asc)` alters the `UniqueBuyerList`'s `internalList` permanently and sorts it by the compared item and by the given order.
 
 
-**Step 5:**
+**Step 7:**
 Finally, a `CommandResult` with the relevant feedback is returned to the `LogicManager`.
 
 The following Sequence Diagrams summarizes the various steps involved:
@@ -421,6 +450,8 @@ The following Sequence Diagrams summarizes the various steps involved:
 ![SortBuyerSequenceDiagram](images/SortBuyerSequenceDiagram.png)
 
 Design Considerations:
+
+
 Current Design: The structure of internal list change permanently, and instead of passing the comparator, the `comparedItem` and `order` are passed around in every method call.
 
 **Pros:**
@@ -447,90 +478,6 @@ Alternative 2: Pass a comparator along instead of `comparedItem` and `order`
 
 **Cons:**
 - Harder to implement, not efficient for sort with limited options.
-
-
-
-
-
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedClientAddressBook`. It extends `ClientAddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedClientAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedClientAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedClientAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitClientAddressBook()`, `Model#undoClientAddressBook()` and `Model#redoClientAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedClientAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-![UndoRedoState0](images/UndoRedoState0.png)
-
-Step 2. The user executes `delete-b/delete-s 5` command to delete the 5th client in the address book. The `delete-b/s` command calls `Model#commitClientAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `clientAddressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-![UndoRedoState1](images/UndoRedoState1.png)
-
-Step 3. The user executes `add-b/s n/David …​` to add a new client. The `add-b/s` command also calls `Model#commitClientAddressBook()`, causing another modified address book state to be saved into the `clientAddressBookStateList`.
-
-![UndoRedoState2](images/UndoRedoState2.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitClientAddressBook()`, so the address book state will not be saved into the `clientAddressBookStateList`.
-
-</div>
-
-Step 4. The user now decides that adding the client was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoClientAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-![UndoRedoState3](images/UndoRedoState3.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how the undo operation works:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoClientAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitClientAddressBook()`, `Model#undoClientAddressBook()` or `Model#redoClientAddressBook()`. Thus, the `clientAddressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add-b/s n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-    * Pros: Easy to implement.
-    * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-    * Pros: Will use less memory (e.g. for `delete-b/s`, just save the client being deleted).
-    * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
 
 ### Clear buyer list/Clear seller list
 
@@ -587,7 +534,7 @@ Having a seperate buyer and seller list means we need to seperate the find comma
 Examples:
 - `list-b` lists all current buyers
 - `list-s` lists all current sellers
--
+
 #### Result:
 returns an unfiltered list of sellers or buyers
 
@@ -637,7 +584,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user                                       | find a client by name                                                            | locate details of clients without having to go through the entire list |
 | `* *`    | user                                       | hide private contact details                                                     | minimize chance of someone else seeing them by accident                |
 | `*`      | user with many clients in the address book | sort clients by name                                                             | locate a client easily                                                 |
-| Priority | As a …​                                    | I want to …​                                                                     | So that I can…​                                                        |
 | `* * *`  | housing agent with many clients            | view client details fast                                                         | can deal with customers easily when they contact me                    |
 | `* * *`  | housing agent                              | add a new client quickly with a quick description                                | update my client list efficiently                                      |
 | `* * *`  | housing agent                              | see relevant information about my clients                                        | understand their needs                                                 |
@@ -760,8 +706,8 @@ testers are expected to do more *exploratory* testing.
    example JSON format of the `buyeraddressbook.json`  and `selleraddressbook`:
 
 
-   ```buyeraddressbook.json```:
-    
+   `buyeraddressbook.json`:
+
     ```
     {
       "buyers" : [ {
@@ -772,7 +718,7 @@ testers are expected to do more *exploratory* testing.
         "propertyToBuy" : {
           "house" : {
             "houseType" : "Bungalow",
-            "location" : "Clementi"
+            "location" : "clementi"
           },
           "priceRange" : {
             "lower" : "500000",
@@ -787,9 +733,9 @@ testers are expected to do more *exploratory* testing.
         "propertyToBuy" : null
       }
     }
-    ```
+    ``` 
 
-   ```selleraddressbook.json```:
+    `selleraddressbook.json`:
 
     ```
     {
@@ -801,7 +747,7 @@ testers are expected to do more *exploratory* testing.
         "propertyToSell" : {
           "house" : {
             "houseType" : "Bungalow",
-            "location" : "Queens Town"
+            "location" : "cueens town"
           },
           "priceRange" : {
             "lower" : "24",

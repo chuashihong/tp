@@ -17,7 +17,7 @@ It is easy to use, and free!
 3. Copy the .jar file to any folder which you wish to store the AgentSee application in. It is recommended that the folder is **empty** before copying in the .jar file.
 
 4. Double-click the file to start the app. A GUI similar to the one below should appear in a few seconds. Note that sample data will be automatically added when running the .jar file for the first time.<br>
-   ![Ui](images/UI.png)
+   ![Ui](images/Ui.png)
 
 5. Input a command in the command box and press Enter on your keyboard to execute it.
    - E.g. `add-b n/David p/62353535` 
@@ -85,6 +85,7 @@ The Features section will be split into 3 subsections for:
   * **Location** & **Address** must be non-empty, and can contain **alphabets**, **numerics** and **special symbols**. E.g. `Kent Ridge 1/2`. 
     * However, inputs like `l/Bishan h/hdb` will be treated as `l/Bishan` & `h/hdb` (see above).
     * Typing `l/Bishanh/abcpr/0,2` is still acceptable and will treat `Bishanh/abcpr/0,2` as the location input.
+  * **Location** will be converted to **lower case**.
   * **Price range** must be in a `lower,upper` format. E.g. `1000,2000`
 * The **displayed seller list** & **displayed buyer list** are the sellers and buyers shown on the UI of the application respectively. They do not refer to the entire list of buyers & sellers.
 * If we do refer to the whole list of buyers or sellers, we will just use **buyer list** or **seller list** respectively.
@@ -159,13 +160,13 @@ Format: `add-ptb INDEX l/LOCATION pr/PRICE_RANGE h/HOUSE_TYPE`
 * The order of the inputs can be in any order.
 * The `PRICE_RANGE` must be a valid **non-negative integer** with `lower` being less than or equal to `upper`.
 * The `PRICE_RANGE` can include `0` since the buyer might want to try their luck and see if anyone is selling their property for free.
-* Do use appropriate `LOCATION` for your own utility. E.g. `Bishan` or `Marymount`. The application will not check if it is an actual location in Singapore or elsewhere.
+* Do use appropriate `LOCATION` for your own utility. E.g. `bishan` or `marymount`. The application will not check if it is an actual location in Singapore or elsewhere.
 * You cannot add a new property to buy once one has already been added.
 * If there are **leading** or **trailing** whitespace for `LOCATION`, `PRICE_RANGE` or `HOUSE_TYPE`, it will be ignored. E.g. `____hdb_____` where `_` is whitespace will be treated as `hdb`.
 * If there are multiple inputs for the same field, only the last one will be **processed**. Consequently, if it is invalid, earlier valid inputs will not be chosen. E.g. `h/hdb h/plaza` is invalid since `plaza` is not a recognized house type.
 
 Examples:
-* `add-ptb 1 l/Bishan pr/400000,500000 h/hdb` means that 1st buyer in the displayed buyer list wishes to buy a HDB in Bishan for any price from $400,000 to $500,000. 
+* `add-ptb 1 l/Bishan pr/400000,500000 h/hdb` means that 1st buyer in the displayed buyer list wishes to buy a HDB in bishan for any price from $400,000 to $500,000. 
 
 #### Adding an appointment with buyer. `appt-b`
 
@@ -174,7 +175,7 @@ Function: Create an appointment with a certain buyer. Now, you can keep track of
 Format: `appt-b INDEX time/TIME`
 
 * Create an appointment with the buyer at the specified `INDEX`. The index refers to the index number shown in the displayed buyer list. The index **must be a positive integer** 1, 2, 3, …​ within the size of the displayed buyer list.
-* The input `TIME` is in a `yyyy-mm-dd-hh-mm` format of: the year, month, day of the month, hour and minute. Use the example below for reference.
+* The input `TIME` is in a `yyyy-MM-dd-HH-mm` format of: the year, month, day of the month, hour and minute. Use the example below for reference.
 * The time entered must be a time in the future.
 * To **delete an appointment** with a buyer, use the keyword `reset` after the `time/` prefix.
 * Multiple clients may have the same appointment `TIME` (E.g. Zoom meetings).
@@ -182,6 +183,7 @@ Format: `appt-b INDEX time/TIME`
 Examples:
 * `appt-b 1 time/2023-01-01-12-12` sets a new appointment for the 1st buyer on the displayed buyer list on 1st January 2023 and 12:12pm.
 * `appt-b 1 time/reset` deletes the existing appointment with the 1st buyer in the list.
+
 #### Matching a buyer!
 
 Function: Display potential sellers by matching the demand of a buyer. Now, you can easily find properties that buyers are interested in!
@@ -392,7 +394,7 @@ Format: `add-pts INDEX l/LOCATION pr/PRICE_RANGE h/HOUSE_TYPE a/ADDRESS`
 * The order of the inputs can be in any order.
 * The `PRICE_RANGE` must be a valid **non-negative integer** with `lower` being less than or equal to `upper`.
 * The `PRICE_RANGE` can include `0` since the seller might be generous and give their house away for free.
-* Do use appropriate `LOCATION` for your own utility. E.g. `Bishan` or `Marymount`. The application will not check if it is an actual location in Singapore or elsewhere.
+* Do use appropriate `LOCATION` for your own utility. E.g. `bishan` or `marymount`. The application will not check if it is an actual location in Singapore or elsewhere.
 * Do use appropriate `ADDRESS` to maximize your own utility. E.g. `Blk 343, Ajax Ave 1121`. The application will not check if it is an actual location in Singapore or elsewhere.
 * The application will not check if the `LOCATION` actually contains a property with the given `ADDRESS`. It is up to your due diligence to ensure `ADDRESS` is at `LOCATION` stated.
 * It is possible for multiple different sellers to sell same `ADDRESS` properties. This is for cases that you are storing information about separate residents of the property.
@@ -402,7 +404,7 @@ Format: `add-pts INDEX l/LOCATION pr/PRICE_RANGE h/HOUSE_TYPE a/ADDRESS`
 * If there are multiple inputs for the same field, only the last one will be **processed**. Consequently, if it is invalid, earlier valid inputs will not be chosen. E.g. `h/hdb h/plaza` is invalid since `plaza` is not a recognized house type.
 
   Examples:
-* `add-pts 1 l/Ajax pr/800000,900000 h/condo a/Ajax Ave 1, 02-100` means that 1st seller in the displayed seller list wishes to sell a condominium in Ajax at Ajax Ave 1, 02-100 for any price from $800,000 to $900,000.
+* `add-pts 1 l/Ajax pr/800000,900000 h/condo a/Ajax Ave 1, 02-100` means that 1st seller in the displayed seller list wishes to sell a condominium in ajax at Ajax Ave 1, 02-100 for any price from $800,000 to $900,000.
 
 #### Adding an appointment with seller. `appt-s`
 
@@ -411,7 +413,7 @@ Function: Create an appointment with a certain seller. Now, you can keep track o
 Format: `appt-s INDEX time/TIME`
 
 * Create an appointment with the seller at the specified `INDEX`. The index refers to the index number shown in the displayed seller list. The index **must be a positive integer** 1, 2, 3, …​ within the size of the displayed seller list.
-* The input `TIME` is in a `yyyy-mm-dd-hh-mm` format of: the year, month, day of the month, hour and minute. Use the example below for reference.
+* The input `TIME` is in a `yyyy-MM-dd-HH-mm` format of: the year, month, day of the month, hour and minute. Use the example below for reference.
 * The time entered must be a time in the future.
 * To delete an appointment with a seller, use the keyword `reset` after the `time/` prefix.
 * Multiple clients may have the same appointment `TIME` (E.g. Zoom meetings).
@@ -419,6 +421,7 @@ Format: `appt-s INDEX time/TIME`
 Examples:
 * `appt-s 1 time/2023-01-01-12-12` sets a new appointment for the 1st seller on the displayed seller list on 1st January 2023 and 12:12pm.
 * `appt-s 1 time/reset` deletes the existing appointment with the 1st seller in the list.
+
 #### Editing a seller. `edit-s`
 
 Function: Edit an existing seller's information in the displayed seller list.
@@ -434,7 +437,7 @@ Format: `edit-s INDEX [n/NAME] [p/PHONE] [t/TAG]… ​[h/HOUSE_TYPE] [l/LOCATIO
 * At least one of the optional inputs must be provided.
 * The order of the inputs can be in any order.
 * Existing values will be updated to the input values.
-* When editing tags, all the existing tags of the buyer will be **removed**, and replaced with the specified tags in the input. Hence, you can remove all the buyer’s tags by typing `t/` without specifying any tags after it.
+* When editing tags, all the existing tags of the seller will be **removed**, and replaced with the specified tags in the input. Hence, you can remove all the seller’s tags by typing `t/` without specifying any tags after it.
 * The house-related inputs (`pr/`, `l/`, `h/`, `a/`) cannot be edited until a Property is added (See how to add one here).
 * Appointment cannot be edited! You can reset and add another appointment with the `appt-s` commands.
 
@@ -450,19 +453,19 @@ Function: Find sellers whose selected **field** contain any of the given keyword
 
 Format: `find-s field/KEYWORD1 [MORE_KEYWORDS]`
 
-* The **fields**` are:
+* The **fields** are:
   * name `n/`
   * phone `p/`
   * location `l/`
   * tags `t/`
   * house type `h/`
-* The search is **case-insensitive**. E.g `find-s n/hans` will match buyers with `Hans` and `HanS` in their name.
+* The search is **case-insensitive**. E.g `find-s n/hans` will match sellers with `Hans` and `HanS` in their name.
 * The **order** of the keywords does not matter. e.g. `find-bs n/Hans Bo` is equivalent to `find-s n/Bo Hans`.
 * All partial words will be matched e.g. `Han` keyword will match `Hans` and `Han`.
 * However, if the keyword is larger than the item itself, it will not match e.g. `Hans` keyword will not match `Han` in name
 * Sellers matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* * find-b/s will shorten the current list to the filtered list. To show the full list again, type the corresponding list command i.e. list-b/s
+
 
 Examples:
 * `find-s n/John` displays seller whose names are `john` and `John Doe`.
@@ -479,7 +482,7 @@ Function: Delete the specified seller from the displayed seller list.
 Format: `delete-s INDEX`
 
 * Deletes the seller at the specified `INDEX`. The index refers to the index number shown in the displayed seller list. The index **must be a positive integer** 1, 2, 3, …​ within the size of the displayed seller list.
-* The displayed list refers to the seller list shown after a `list-b`, `sort-b` or `find-b` was previously executed.
+* The displayed list refers to the seller list shown after a `list-s`, `sort-s` or `find-s` was previously executed.
 
 Examples:
 * `list-s` followed by `delete-s 2` deletes the 2nd seller in the seller list.
@@ -550,7 +553,7 @@ Below is the example of 2 buyers that are saved under `buyeraddressbook.json` :
     "propertyToBuy" : {
       "house" : {
         "houseType" : "Bungalow",
-        "location" : "Clementi"
+        "location" : "clementi"
       },
       "priceRange" : {
         "lower" : "500000",
@@ -578,7 +581,7 @@ And here are the examples of 2 sellers, one has a property and one does not have
     "propertyToSell" : {
       "house" : {
         "houseType" : "Bungalow",
-        "location" : "Queens Town"
+        "location" : "queens town"
       },
       "priceRange" : {
         "lower" : "24",
@@ -614,7 +617,6 @@ And here are the examples of 2 sellers, one has a property and one does not have
 Otherwise, all other value will be translated to `Unspecified` housetype!
 - Currently, the `housetype` cannot put `null` inside it, otherwise the program cannot run (We will solve it in v1.4!)
 - `pricerange` must be a digit string, and `lower` value must be less than or equal to `upper`
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -655,29 +657,33 @@ Otherwise, all other value will be translated to `Unspecified` housetype!
 ## Command summary
 
 
-| Action                          | Format, Examples                                                                                                                                                      |
-|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Help**                        | `help`                                                                                                                                                                |
-| **Exit**                        | `exit`                                                                                                                                                                |
-| **Match property**              | `match INDEX` <br> e.g., `match 1`                                                                                                                                    |
-| **List Buyers**                 | `list-b`                                                                                                                                                              |
-| **Add Buyer**                   | `add-b n/NAME p/PHONE_NUMBER [t/TAG]…​` <br> e.g., `add-b n/James Ho p/22224444`                                                                                      |
-| **Add Buyer Property**          | `add-ptb l/LOCATION pr/PRICE_RANGE h/HOUSE_TYPE` <br> e.g., `add-ptb l/Bishan pr/100000,200000 h/hdb`                                                                 |
-| **Make Appointment for Buyer**  | `appt-b INDEX time/TIME` <br> e.g., `appt-b 1 time/2022-10-10-12-12`                                                                                                  |
-| **Edit Buyer**                  | `edit-b INDEX [n/NAME] [p/PHONE] [t/TAG]…​ [time/APPOINTMENT] [h/HOUSE_TYPE] [l/LOCATION] [pr/PRICE_RANGE]`  <br> e.g., `edit-b 2 n/James Ho p/22224444 `             |
-| **Find Buyer**                  | `find-b field/KEYWORD1 [MORE_KEYWORDS]` <br> e.g., `find-b n/James Jake`                                                                                              |
-| **Delete Buyer**                | `delete-b INDEX`<br> e.g., `delete-b 3`                                                                                                                               |
-| **Clear Buyers**                | `clear-b`                                                                                                                                                             |
-| **Sort Buyers**                 | `sort-b [by/COMPAREDITEM] [o/ORDER]` <br> e.g., `sort-b by/name o/desc`                                                                                               |
-| **List Sellers**                | `list-s`                                                                                                                                                              |
-| **Add Seller**                  | `add-s n/NAME p/PHONE_NUMBER [t/TAG]…​` <br> e.g., `add-s n/James Ho p/22224444`                                                                                      |
-| **Add Seller Property**         | `add-pts a/ADDRESS l/LOCATION pr/PRICE_RANGE h/HOUSE_TYPE` <br> e.g., `add-pts a/Blk 343, Rika Ave 1 #09-1231 l/Bishan pr/100000,200000 h/hdb`                        |
-| **Make Appointment for Seller** | `appt-s INDEX time/TIME` <br> e.g., `appt-s 1 time/2022-10-10-12-12`                                                                                                  |
-| **Edit Seller**                 | `edit-s INDEX [n/NAME] [p/PHONE] [t/TAG]…​ [time/APPOINTMENT] [h/HOUSE_TYPE] [l/LOCATION] [pr/PRICE_RANGE] [a/ADDRESS]`  <br> e.g., `edit-s 2 n/James Ho p/22224444 ` |
-| **Find Seller**                 | `find-s field/KEYWORD1 [MORE_KEYWORDS]` <br> e.g., `find-s n/James Jake`                                                                                              |
-| **Delete Seller**               | `delete-s INDEX`<br> e.g., `delete-s 3`                                                                                                                               |
-| **Clear Sellers**               | `clear-s`                                                                                                                                                             |
-| **Sort Sellers**                | `sort-s [by/COMPAREDITEM] [o/ORDER]` <br> e.g., `sort-s by/time o/asc`                                                                                                |
+| Action                           | Format, Examples                                                                                                                                   |
+|----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Help**                         | `help`                                                                                                                                             |
+| **Exit**                         | `exit`                                                                                                                                             |
+| **Clear all buyers and sellers** | `clear-all`                                                                                                                                        |
+| **Match buyer by all fields**    | `match INDEX` <br> e.g., `match 1`                                                                                                                 |
+| **Match buyer by house type**    | `match-h INDEX` <br> e.g., `match-h 1`                                                                                                             |
+| **Match buyer by location**      | `match-l INDEX` <br> e.g., `match-l 1`                                                                                                             |
+| **Match buyer by price range**   | `match-pr INDEX` <br> e.g., `match-pr 1`                                                                                                           |
+| **List Buyers**                  | `list-b`                                                                                                                                           |
+| **Add Buyer**                    | `add-b n/NAME p/PHONE_NUMBER [t/TAG]…​` <br> e.g., `add-b n/James Ho p/22224444`                                                                   |
+| **Add Buyer Property**           | `add-ptb l/LOCATION pr/PRICE_RANGE h/HOUSE_TYPE` <br> e.g., `add-ptb l/Bishan pr/100000,200000 h/hdb`                                              |
+| **Make Appointment for Buyer**   | `appt-b INDEX time/TIME` <br> e.g., `appt-b 1 time/2022-10-10-12-12`                                                                               |
+| **Edit Buyer**                   | `edit-b INDEX [n/NAME] [p/PHONE] [t/TAG]…​ [h/HOUSE_TYPE] [l/LOCATION] [pr/PRICE_RANGE]`  <br> e.g., `edit-b 2 n/James Ho p/22224444 `             |
+| **Find Buyer**                   | `find-b field/KEYWORD1 [MORE_KEYWORDS]` <br> e.g., `find-b n/James Jake`                                                                           |
+| **Delete Buyer**                 | `delete-b INDEX`<br> e.g., `delete-b 3`                                                                                                            |
+| **Clear Buyers**                 | `clear-b`                                                                                                                                          |
+| **Sort Buyers**                  | `sort-b [by/COMPAREDITEM] [o/ORDER]` <br> e.g., `sort-b by/name o/desc`                                                                            |
+| **List Sellers**                 | `list-s`                                                                                                                                           |
+| **Add Seller**                   | `add-s n/NAME p/PHONE_NUMBER [t/TAG]…​` <br> e.g., `add-s n/James Ho p/22224444`                                                                   |
+| **Add Seller Property**          | `add-pts a/ADDRESS l/LOCATION pr/PRICE_RANGE h/HOUSE_TYPE` <br> e.g., `add-pts a/Blk 343, Rika Ave 1 #09-1231 l/Bishan pr/100000,200000 h/hdb`     |
+| **Make Appointment for Seller**  | `appt-s INDEX time/TIME` <br> e.g., `appt-s 1 time/2022-10-10-12-12`                                                                               |
+| **Edit Seller**                  | `edit-s INDEX [n/NAME] [p/PHONE] [t/TAG]…​ [h/HOUSE_TYPE] [l/LOCATION] [pr/PRICE_RANGE] [a/ADDRESS]`  <br> e.g., `edit-s 2 n/James Ho p/22224444 ` |
+| **Find Seller**                  | `find-s field/KEYWORD1 [MORE_KEYWORDS]` <br> e.g., `find-s n/James Jake`                                                                           |
+| **Delete Seller**                | `delete-s INDEX`<br> e.g., `delete-s 3`                                                                                                            |
+| **Clear Sellers**                | `clear-s`                                                                                                                                          |
+| **Sort Sellers**                 | `sort-s [by/COMPAREDITEM] [o/ORDER]` <br> e.g., `sort-s by/time o/asc`                                                                             |
 
 
 [Back to top](#quick-start)
