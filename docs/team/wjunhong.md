@@ -10,6 +10,8 @@ AgentSee is a desktop application for property agents to efficiently manage thei
 Given below are my contributions to the project.
 
 * **Code contributed**:
+    
+    [RepoSense Link](https://nus-cs2103-ay2122s2.github.io/tp-dashboard/?search=&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2022-02-18&tabOpen=true&tabType=authorship&zFR=false&tabAuthor=WJunHong&tabRepo=AY2122S2-CS2103T-T11-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false)
     * `add-b` command
     * `add-ptb` and `add-pts` commands
     * `delete-b` & `delete-s` command
@@ -26,6 +28,7 @@ Given below are my contributions to the project.
     * FXML for UI updates
     * `NullPropertyToBuy` (initial class before enhancements).
     * `TypicalPropertyToBuy` & `TypicalPropertyToSell`, `HouseTypeTest`, `PropertyCommandsTestUtil`
+    * `BuyerAddressBookTest` & `SellerAddressBookTest` classes
 
 * **Enhancements implemented**:
   * Improved Find Command for v1.2 - Keywords need not exactly match the client name, and can simply be contained in them.
@@ -51,8 +54,11 @@ Given below are my contributions to the project.
     * Added explanation for design choices in `add-b`, `add-s`, `add-ptb`, `add-pts`
 
 * **Contributions to the DG**:
-    * Added implementation details for `find` command
+    * Added initial implementation details for `find` command
+    * Added implementation details for `add-b` command
     * Added User Stories and Use cases to Developer Guide
+    * Fix Use cases
+    * Fix UML diagrams and other components referencing AB3 commands
 
 * **Contributions to team tasks**:
     * Set up initial GitHub organization and repository

@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BUYERS;
 
 import java.util.List;
 
@@ -14,13 +15,16 @@ import seedu.address.model.seller.Seller;
 
 public class AppointmentSellerCommand extends Command {
     public static final String COMMAND_WORD = "appt-s";
-    public static final String MESSAGE_EMPTY_INPUT_DATE = "Please enter the date following the seller index\n"
-            + " in the form of 'yyyy-MM-dd-HH-mm'";
     public static final String MESSAGE_ADD_APPOINTMENT_SUCCESS = "You have made an appointment with seller: %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "You have removed an appointment with seller: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": The appointment time should be specified to minutes\n"
-            + "with the format 'yyyy-MM-dd-HH-mm'\n"
+            + ": Makes an appointment with a seller\n"
+            + "Parameters: INDEX " + PREFIX_APPOINTMENT
+            + "TIME\n"
+            + "Must include: INDEX time/ \n"
+            + "Ensure INDEX is positive integer & less than or equal to size of displayed seller list \n"
+            + "The appointment time should be specified to minutes "
+            + "with the format 'yyyy-MM-dd-HH-mm.'\n"
             + "Example:  " + COMMAND_WORD + " 1 "
             + "time/ 2022-05-04-14-00";
     public static final String MESSAGE_TIME_IN_PAST = "The time you entered is in the past\n"
@@ -56,7 +60,7 @@ public class AppointmentSellerCommand extends Command {
         );
 
         model.setSeller(sellerToEdit, editedSeller);
-        model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
+        model.updateFilteredBuyerList(PREDICATE_SHOW_ALL_BUYERS);
 
         return new CommandResult(generateSuccessMessage(editedSeller));
     }
